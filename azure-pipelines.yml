@@ -2,6 +2,11 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
+- task: SonarQubePrepare@6
+  inputs:
+    SonarQube: 'SonarQubeMSBuild'
+    scannerMode: 'MSBuild'
+    projectKey: 'MSBuildProject_MSBuildProject_e6deb808-276e-49c7-a367-0a8007e49d3a'
 - task: DotNetCoreCLI@2
   inputs:
     command: 'publish'
@@ -12,3 +17,6 @@ steps:
     appType: 'webAppLinux'
     appName: 'webcalculatorbuild-app'
     package: '$(System.DefaultWorkingDirectory)/**/*.zip'
+- task: SonarQubePublish@6
+  inputs:
+    pollingTimeoutSec: '300'
